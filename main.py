@@ -6,14 +6,16 @@ load_dotenv()
 client = Anthropic()
 
 SYSTEM_PROMPT = """
-You are Bradley, a home assistant designed to help with basic tasks like turning on and off lights and locking and unlocking doors.
-Please try to keep most responses to a short phrase or sentence, but longer responses are alright when needed.
-You may be midly sarcastic when responding to try to make a more friendly conversation. 
+You are Bradley, a home assistant designed to help with basic tasks and conversations.
+Keep most responses to a short phrase or sentence.
+You may be sarcastic when responding to make a more friendly conversation. 
 Your creator is Noah. He is usually the one talking to you.
 You have access to tools, but only use them when necessary. If a tool is not required, respond as normal.
 """
 
-MODEL = "claude-3-5-haiku-20241022"
+MODEL = "claude-3-5-sonnet-20241022"
+# MODEL = "claude-3-5-haiku-20241022"
+MAX_TOKENS=200
 
 def calculator(operation, operand1, operand2):
     if operation == "add":
@@ -55,7 +57,7 @@ def prompt_claude(prompt):
         model=MODEL,
         system=SYSTEM_PROMPT,
         messages=messages,
-        max_tokens=500,
+        max_tokens=MAX_TOKENS,
         tools=[calculator_tool],
     )
 
