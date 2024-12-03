@@ -1,7 +1,16 @@
 from anthropic import Anthropic
 from dotenv import load_dotenv
+from os import environ
+
+from voice import play_sound_of_text
+
+import logging
 
 load_dotenv()
+
+logging.basicConfig(level=getattr(logging, environ.get("LOG_LEVEL", "DEBUG").upper()))
+logger = logging.getLogger(__name__)
+
 
 client = Anthropic()
 
@@ -75,14 +84,15 @@ def prompt_claude(prompt):
             try:
                 result = calculator(operation, operand1, operand2)
                 print("Calculation result is:", result)
+                return result
             except ValueError as e:
                 print(f"Error: {str(e)}")
 
     elif response.stop_reason == "end_turn":
-        print("Claude didn't want to use a tool")
-        print("Claude responded with:")
-        print(response.content[0].text)
+        return response.content[0].text
 
 
 if __name__ == "__main__":
-    prompt_claude(input())
+    result = prompt_claude(input())
+    print(result)
+    play_sound_of_text(result)
