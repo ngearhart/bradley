@@ -45,8 +45,10 @@ def get_audio_filename_for_text(text: str) -> str:
     voice = texttospeech.VoiceSelectionParams(
         # language_code="en-US",
         # name="en-US-Journey-D",
-        language_code="en-GB",
-        name="en-GB-Journey-D",
+        # language_code="en-GB",
+        # name="en-GB-Journey-D",
+        language_code="en-AU",
+        name="en-AU-Journey-D",
         ssml_gender=texttospeech.SsmlVoiceGender.MALE,
     )
 
